@@ -1,0 +1,108 @@
+/* ---------------- NAVBAR BASE ---------------- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: linear-gradient(90deg, #1B3C53, #34495e);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 50px;
+  z-index: 1000;
+  margin: 0;
+}
+
+/* ---------------- BRAND ---------------- */
+.navbar-left .navbar-brand {
+  font-size: 24px;
+  font-weight:bold;
+  margin: 0;
+  
+}
+
+.navbar-left .navbar-brand a {
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.navbar-left .navbar-brand a:hover {
+  color: #f39c12;
+  text-decoration: none;
+}
+
+/* ---------------- NAV LINKS ---------------- */
+.navbar-right ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navbar-right ul li a {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+/* Hover & Active States */
+.navbar-right ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f1c40f;
+  border-color: #f1c40f;
+  transform: translateY(-2px);
+}
+
+/* Highlight current page */
+.navbar-right ul li a.active {
+  background-color: #f39c12;
+  color: #1B3C53;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+}
+
+/* ---------------- SPECIAL BUTTONS ---------------- */
+.navbar-right ul li a[href="/login"],
+.navbar-right ul li a[href="/signup"] {
+  background-color: #1055df;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 25px;
+  padding: 10px 22px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  border: none;
+}
+
+.navbar-right ul li a[href="/login"]:hover,
+.navbar-right ul li a[href="/signup"]:hover {
+  background-color: #e67e22;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 10px 20px;
+    height: auto;
+  }
+
+  .navbar-right ul {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+}

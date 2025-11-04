@@ -1,0 +1,142 @@
+.bookdetails-container {
+  max-width: 960px;
+  margin: 3rem auto;
+  padding: 1.5rem 1.5rem 3rem;
+  background: #f7fafd;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(37, 60, 81, 0.1);
+  color: #222;
+}
+
+.bookdetails-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.8rem;
+  text-align: center;
+  gap: 1rem;
+}
+
+.bookdetails-cover {
+  width: 190px;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 16px;
+  background: #e9f1f7;
+  box-shadow: 0 6px 20px rgba(50, 86, 124, 0.15);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.bookdetails-cover:hover {
+  transform: scale(1.05);
+}
+
+.bookdetails-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f4c82;
+  letter-spacing: 0.02em;
+}
+
+.bookdetails-author {
+  font-size: 1rem;
+  color: #2985d6;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.bookdetails-section {
+  margin-bottom: 2.8rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bookdetails-section h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #123d6a;
+  margin-bottom: 0.9rem;
+  border-bottom: 2px solid #3793e0;
+  padding-bottom: 0.3rem;
+}
+
+.bookdetails-synopsis {
+  font-size: 1.125rem;
+  color: #333;
+  line-height: 1.7;
+  font-weight: 400;
+  text-align: justify;
+  white-space: pre-line;
+}
+
+.bookdetails-related-row {
+  display: flex;
+  gap: 2.5rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: #b0c4de transparent;
+}
+
+.bookdetails-related-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.bookdetails-related-row::-webkit-scrollbar-thumb {
+  background-color: #b0c4de;
+  border-radius: 10px;
+}
+
+.bookdetails-related-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bookdetails-related-card {
+  flex: 0 0 160px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(92, 118, 159, 0.12);
+  cursor: pointer;
+  padding: 1.1rem 1rem 1.5rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  text-align: center;
+  user-select: none;
+}
+
+.bookdetails-related-card:hover {
+  box-shadow: 0 12px 32px rgba(92, 118, 159, 0.26);
+  transform: translateY(-6px);
+}
+
+.bookdetails-related-cover {
+  border-radius: 10px;
+  background: #f3f6fa;
+  width: 90px;
+  height: 128px;
+  object-fit: cover;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.bookdetails-related-title {
+  font-weight: 700;
+  color: #07426a;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bookdetails-related-author {
+  font-size: 0.9rem;
+  color: #9ebbe3;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

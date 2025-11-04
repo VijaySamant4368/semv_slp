@@ -1,0 +1,68 @@
+/* Full page layout */
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Heading */
+.logout-container h2 {
+  font-size: 2rem;
+  color: #1B3C53;
+  margin-bottom: 0.5rem;
+}
+
+/* Description text */
+.logout-container p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* Buttons container */
+.logout-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Yes button */
+.btn-yes {
+  padding: 0.8rem 2rem;
+  background-color: #1B3C53;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.btn-yes:hover {
+  background-color: #234C6A;
+  transform: translateY(-2px);
+}
+
+/* No button */
+.btn-no {
+  padding: 0.8rem 2rem;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.btn-no:hover {
+  background-color: #aaa;
+  transform: translateY(-2px);
+}

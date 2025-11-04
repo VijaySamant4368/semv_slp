@@ -1,0 +1,99 @@
+/* src/components/About.css */
+
+.about-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2.5rem 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  background-color: #fafbfc;
+  line-height: 1.7;
+}
+
+.about-container h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #0a3d62;
+  border-bottom: 3px solid #0f4c82;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+}
+
+.about-container h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #0f4c82;
+  position: relative;
+}
+
+.about-container h2::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background: #2563eb;
+  bottom: -6px;
+  left: 0;
+  border-radius: 3px;
+}
+
+.about-container p {
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+  color: #444;
+  text-align: justify;
+}
+
+.team-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.team-member {
+  background-color: #f0f6fb;
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.team-member:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.team-member img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.8rem;
+  border: 3px solid #0f4c82;
+  transition: transform 0.3s ease;
+}
+
+.team-member:hover img {
+  transform: scale(1.08);
+}
+
+.team-member h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #07426a;
+}
+
+.team-member p {
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}

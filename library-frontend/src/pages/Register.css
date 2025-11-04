@@ -1,0 +1,88 @@
+/* Page layout */
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1B3C53; /* same as login page */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+/* Center container */
+.register-container {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Heading */
+.register-form h2 {
+  margin-bottom: 1.8rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #234C6A;
+}
+
+/* Labels */
+.register-form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #1B3C53;
+}
+
+/* Inputs */
+.register-form input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.3rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.register-form input:focus {
+  border-color: #234C6A;
+}
+
+/* Button */
+.register-form button {
+  width: 100%;
+  padding: 0.95rem;
+  background-color: #234C6A;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.register-form button:hover {
+  background-color: #1B3C53;
+}
+
+/* Login redirect text */
+.login-text {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.login-text a {
+  color: #234C6A;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
