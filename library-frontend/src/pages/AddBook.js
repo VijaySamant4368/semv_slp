@@ -11,7 +11,8 @@ const AddBook = () => {
     description: "",
   });
 
-  const [donorName, setDonorName] = useState(""); // 👈 store name
+  const [coverImage, setCoverImage] = useState(null);
+  const [donorName, setDonorName] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -19,7 +20,6 @@ const AddBook = () => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    // Fetch donor details using token
     axios
       .get("http://localhost:4000/api/members/me", {
         headers: { Authorization: `Bearer ${token}` },
@@ -32,21 +32,40 @@ const AddBook = () => {
     setBook({ ...book, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    setCoverImage(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
-    const token=getToken();
-    
+    const token = getToken();
     if (!token) {
-    
       setMessage("⚠️ Please log in to donate a book.");
       setLoading(false);
       return;
     }
 
     try {
+      let imageUrl = "";
+
+      // ✅ Upload to Cloudinary first if image selected
+      if (coverImage) {
+        const formData = new FormData();
+        formData.append("file", coverImage);
+        formData.append("upload_preset", "book_cover"); // replace with your Cloudinary preset
+
+        const cloudRes = await axios.post(
+          `https://api.cloudinary.com/v1_1/dtk12thvk/image/upload`,
+          formData
+        );
+
+        imageUrl = cloudRes.data.secure_url;
+      }
+
+      // ✅ Now send book details to backend
       const res = await axios.post(
         "http://localhost:4000/api/books",
         {
@@ -56,7 +75,8 @@ const AddBook = () => {
             ? book.genres.split(",").map((g) => g.trim())
             : [],
           description: book.description,
-          donorName, // 👈 send name too
+          donorName,
+          coverImage: imageUrl, // 👈 store image URL
         },
         {
           headers: {
@@ -67,6 +87,7 @@ const AddBook = () => {
 
       setMessage(res.data.message || "Book donated successfully ✅");
       setBook({ title: "", author: "", genres: "", description: "" });
+      setCoverImage(null);
     } catch (err) {
       console.error("Error donating book:", err);
       setMessage(err.response?.data?.message || "Failed to donate book ❌");
@@ -118,6 +139,17 @@ const AddBook = () => {
           rows="4"
         ></textarea>
 
+        <label>Book Cover Image</label>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+
+        {coverImage && (
+          <img
+            src={URL.createObjectURL(coverImage)}
+            alt="Preview"
+            style={{ width: "120px", marginTop: "10px", borderRadius: "8px" }}
+          />
+        )}
+
         {donorName && (
           <p style={{ fontStyle: "italic", color: "#2d6cdf" }}>
             Logged in as: {donorName}
@@ -125,7 +157,7 @@ const AddBook = () => {
         )}
 
         <button type="submit" disabled={loading}>
-          {loading ? "Adding..." : "Add Book"}
+          {loading ? "Uploading..." : "Add Book"}
         </button>
 
         {message && (

@@ -4,14 +4,14 @@ import Donate from "../models/Donate.js";
 import Member from "../models/Member.js";
 
 export const booksController = {
-  async addBook(req, res) {
+   async addBook(req, res) {
     try {
-      const { title, author, genres, description } = req.body;
+      const { title, author, genres, description, coverImage } = req.body;
 
       if (!title || !author)
         return res.status(400).json({ message: "Title and author are required" });
 
-      // Logged-in user info (from JWT middleware)
+      // ✅ Logged-in user from JWT
       const donorId = req.user?.id;
       if (!donorId)
         return res.status(401).json({ message: "Unauthorized: Donor not found" });
@@ -20,17 +20,18 @@ export const booksController = {
       if (!donor)
         return res.status(404).json({ message: "Member not found" });
 
-      // ✅ Create the book with donor's NAME
+      // ✅ Create book using image URL instead of file path
       const book = await Book.create({
+        coverImage: coverImage || null, // <—— Cloudinary image URL from frontend
         title,
         author,
         genres: Array.isArray(genres) ? genres : genres ? [genres] : [],
         description,
-        doner: donor.name, 
+        doner: donor.name,
         status: "available",
       });
 
-      // ✅ Also record donation in Donate collection (optional)
+      // ✅ Record in donation history
       await Donate.create({
         donor: donorId,
         book: book._id,

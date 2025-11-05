@@ -65,11 +65,17 @@ const BookDetails = () => {
   return (
     <div className="bookdetails-container">
       <div className="bookdetails-header">
-        <img
-          className="bookdetails-cover"
-          src={book.image || "https://via.placeholder.com/150"}
-          alt={book.title}
-        />
+        <div>
+           <img
+        src={
+          book.coverImage ||
+          "https://via.placeholder.com/300x400?text=No+Cover+Available"
+        }
+        alt={book.title}
+        className="book-details-cover"
+      />
+        </div>
+        
         <div className="bookdetails-title">{book.title}</div>
         <div className="bookdetails-author">By: {book.author}</div>
       </div>

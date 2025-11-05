@@ -50,7 +50,17 @@ const Books = () => {
         {books.length > 0 ? (
           books.map((book) => (
             <div key={book._id} className="book-card">
-              
+              <div className="book-cover-div">
+
+              <img
+              src={
+                book.coverImage ||
+                "https://via.placeholder.com/150?text=No+Cover"
+              }
+              alt={book.title}
+              className="book-cover"
+            />
+            </div>
               <h3>{book.title}</h3>
               <p>By {book.author}</p>
               <p className="status">Status: {book.status}</p>
