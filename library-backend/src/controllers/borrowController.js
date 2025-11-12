@@ -1,59 +1,128 @@
-import Borrow from "../models/Borrow.js";
+import BorrowRequest from "../models/BorrowRequest.js";
 import Book from "../models/Book.js";
+import Borrow from "../models/Borrow.js";
 
-export const borrowController = {
-  async borrowBookByUser(req, res) {
-    try {
-      const { memberId, bookId } = req.params;
+// ✅ User sends borrow request
+export const requestBorrow = async (req, res) => {
+  try {
+    const { bookId } = req.params;
+    const userId = req.user.id;
 
-      const book = await Book.findById(bookId);
-      if (!book) return res.status(404).json({ message: "Book not found" });
-      if (book.status !== "available")
-        return res.status(400).json({ message: "Book is not available to borrow" });
+    const book = await Book.findById(bookId);
+    if (!book) return res.status(404).json({ message: "Book not found" });
 
-      const borrow = await Borrow.create({
-        borrower: memberId,
-        book: bookId,
+    if (book.status === "borrowed") {
+      return res.status(400).json({ message: "Book is already borrowed" });
+    }
+
+    const existing = await BorrowRequest.findOne({ userId, bookId, status: "pending" });
+    if (existing) return res.status(400).json({ message: "Already requested this book" });
+
+    const request = new BorrowRequest({ userId, bookId });
+    await request.save();
+
+    res.json({ message: "Borrow request submitted successfully" });
+  } catch (err) {
+    console.error("Error requesting borrow:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+// ✅ Admin approves or rejects a request
+export const updateBorrowStatus = async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const { status } = req.body;
+
+    const request = await BorrowRequest.findById(requestId).populate("bookId");
+    if (!request) return res.status(404).json({ message: "Request not found" });
+    if (!request.bookId) return res.status(404).json({ message: "Book not found" });
+
+    if (status === "approved") {
+      if (request.bookId.status === "borrowed") {
+        return res.status(400).json({ message: "Book is already borrowed" });
+      }
+
+      request.status = "approved";
+      request.approvalDate = new Date();
+
+      // Update book status
+      request.bookId.status = "borrowed";
+      request.bookId.currentHolderId = request.userId;
+      await request.bookId.save();
+
+      // Create Borrow record
+      await Borrow.create({
+        borrower: request.userId,
+        book: request.bookId._id,
         borrowDate: new Date(),
         status: "borrowed",
       });
 
-      book.status = "Not available";
-      book.currentHolderId = memberId;
-      await book.save();
-
-      res.status(201).json({ message: "Book borrowed", borrow });
-    } catch (e) {
-      res.status(500).json({ message: e.message });
+      // Reject other pending requests for same book
+      await BorrowRequest.updateMany(
+        { bookId: request.bookId._id, status: "pending", _id: { $ne: request._id } },
+        { status: "rejected" }
+      );
+    } else if (status === "rejected") {
+      request.status = "rejected";
     }
-  },
 
-  async returnBookByUser(req, res) {
-    try {
-      const { memberId, bookId } = req.params;
+    await request.save();
+    res.json({ message: `Request ${status} successfully` });
 
-      const book = await Book.findById(bookId);
-      if (!book) return res.status(404).json({ message: "Book not found" });
+  } catch (err) {
+    console.error("Error updating borrow status:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
 
-      const borrow = await Borrow.findOne({
-        borrower: memberId,
-        book: bookId,
-        status: "borrowed",
-      }).sort({ createdAt: -1 });
+// ✅ Admin fetches all borrow requests
+export const getAllBorrowRequests = async (req, res) => {
+  try {
+    const requests = await BorrowRequest.find()
+      .populate("userId", "name email")
+      .populate("bookId", "title author status");
+    res.json(requests);
+  } catch (err) {
+    console.error("Error fetching borrow requests:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
 
-      if (!borrow) return res.status(400).json({ message: "No active borrow found for this user and book" });
+// Get all borrowed books
+export const getBorrowedBooks = async (req, res) => {
+  try {
+    const borrowed = await Borrow.find({ status: "borrowed" })
+      .populate("book", "title author status")
+      .populate("borrower", "name email");
+    res.json(borrowed);
+  } catch (err) {
+    console.error("Error fetching borrowed books:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
 
-      borrow.status = "returned";
-      borrow.returnDate = new Date();
-      await borrow.save();
+// Return a borrowed book
+export const returnBorrowedBook = async (req, res) => {
+  try {
+    const { borrowId } = req.params;
 
-      book.status = "available";
-      book.currentHolderId = null;
-      await book.save();
+    const borrow = await Borrow.findById(borrowId).populate("book");
+    if (!borrow) return res.status(404).json({ message: "Borrow record not found" });
 
-      res.json({ message: "Book returned", borrow });
-    } catch (e) {
-      res.status(500).json({ message: e.message });
-    }
-  },
+    borrow.status = "returned";
+    borrow.returnDate = new Date();
+    await borrow.save();
+
+    // Update book status to available
+    borrow.book.status = "available";
+    borrow.book.currentHolderId = null;
+    await borrow.book.save();
+
+    res.json({ message: "Book returned successfully" });
+  } catch (err) {
+    console.error("Error returning book:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
 };

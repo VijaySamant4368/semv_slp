@@ -163,3 +163,26 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.bookdetails-actions{
+  display:flex;
+  gap:60%;
+  justify-content: center;
+  align-items: center;
+}
+.bookdetails-actions button{
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 25px;
+  background: transparent;
+  border: 3px solid black;
+
+}
+
+.bookdetails-actions button:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+  color: #0ff13c;
+  border-color: #0ff13c;
+  transform: translateY(-2px);
+}

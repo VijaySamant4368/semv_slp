@@ -16,35 +16,47 @@ const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    try {
-      const res = await axios.post("http://localhost:4000/api/members/login", {
-        email,
-        password,
-      });
+  try {
+    const res = await axios.post("http://localhost:4000/api/members/login", {
+      email,
+      password,
+    });
 
-      if (res.data && res.data.token) {
-        setToken(res.data.token)
-        setUser(JSON.stringify(res.data.user))
+    if (res.data && res.data.token) {
+      // store token & user in localStorage
+      setToken(res.data.token);
+      setUser(JSON.stringify(res.data.user));
 
-        setIsLoggedIn(true);
-        showToast("Login successful!");
-        navigate("/books");
+      setIsLoggedIn(true);
+      showToast("Login successful!");
+
+      // ✅ Redirect based on role (no extra route logic)
+      const userRole = res.data.user.role;
+
+      if (userRole === "admin") {
+        navigate("/adminDashboard");   // 👈 admin goes here
       } else {
-        setError("Invalid login response. Please try again.");
+        navigate("/books");            // 👈 normal user goes here
       }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError(
-        err.response?.data?.message || "Invalid email or password. Please try again."
-      );
-    } finally {
-      setLoading(false);
+
+    } else {
+      setError("Invalid login response. Please try again.");
     }
-  };
+  } catch (err) {
+    console.error("Login error:", err);
+    setError(
+      err.response?.data?.message ||
+        "Invalid email or password. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="login-container">

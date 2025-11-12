@@ -9,6 +9,8 @@ import memberRoutes from "./routes/memberRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import donateRoutes from "./routes/donateRoutes.js";
 import borrowRoutes from "./routes/borrowRoutes.js";
+import volunteerRoutes from "./routes/volunteerRoutes.js";
+import membershipRoutes from "./routes/membershipRoutes.js";
 
 const app = express();
 
@@ -20,6 +22,10 @@ app.use("/api/members", memberRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/donations", donateRoutes);
 app.use("/api/borrows", borrowRoutes);
+
+app.use("/api/volunteer", volunteerRoutes);
+app.use("/api/membership", membershipRoutes);
+
 
 app.get("/", (_req, res) => res.send({ status: "ok" }));
 

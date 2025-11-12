@@ -27,7 +27,7 @@ export const booksController = {
         author,
         genres: Array.isArray(genres) ? genres : genres ? [genres] : [],
         description,
-        doner: donor.name,
+        donor: donor.name,
         status: "available",
       });
 

@@ -17,9 +17,9 @@ const BookDetails = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const token= getToken()
+        const token = getToken()
         if (!token) {
-          showToast("Please log in to view book details.","warning");
+          showToast("Please log in to view book details.", "warning");
           navigate("/login");
           return;
         }
@@ -41,22 +41,20 @@ const BookDetails = () => {
   }, [bookId, navigate]);
 
   // Borrow handler (optional)
-  const handleBorrow = async () => {
+  const handleBorrow = async (bookId) => {
     try {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        `http://localhost:4000/api/borrow/:memberId/:bookId`,
+      const res = await axios.post(
+        `http://localhost:4000/api/borrows/request/${bookId}`,
         {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${getToken()}` } }
       );
-      alert("Book borrowed successfully!");
+      alert(res.data.message);
     } catch (err) {
-      console.error("Error borrowing book:", err);
-      alert("Failed to borrow book.");
+      alert(err.response?.data?.message || "Error requesting book");
     }
   };
+
+
 
   if (loading) return <p>Loading book details...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
@@ -66,16 +64,16 @@ const BookDetails = () => {
     <div className="bookdetails-container">
       <div className="bookdetails-header">
         <div>
-           <img
-        src={
-          book.coverImage ||
-          "https://via.placeholder.com/300x400?text=No+Cover+Available"
-        }
-        alt={book.title}
-        className="book-details-cover"
-      />
+          <img
+            src={
+              book.coverImage ||
+              "https://via.placeholder.com/300x400?text=No+Cover+Available"
+            }
+            alt={book.title}
+            className="book-details-cover"
+          />
         </div>
-        
+
         <div className="bookdetails-title">{book.title}</div>
         <div className="bookdetails-author">By: {book.author}</div>
       </div>
@@ -86,9 +84,14 @@ const BookDetails = () => {
       </div>
 
       <div className="bookdetails-actions">
-        <button onClick={handleBorrow} className="borrow-btn">
-          Borrow Book
+        <button
+          onClick={() => handleBorrow(book._id)}
+          className="borrow-btn"
+          disabled={book.status === "borrowed"}
+        >
+          {book.status === "borrowed" ? "Already Borrowed" : "Borrow Book"}
         </button>
+
         <button onClick={() => navigate("/books")} className="back-btn">
           Back to Books
         </button>

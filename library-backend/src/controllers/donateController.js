@@ -2,24 +2,24 @@ import Donate from "../models/Donate.js";
 import Book from "../models/Book.js";
 
 export const donateController = {
-  async donateBook(req, res) {
-    try {
-      const { memberId } = req.params;
-      const { bookId } = req.params;
+  // async donateBook(req, res) {
+  //   try {
+  //     const { memberId } = req.params;
+  //     const { bookId } = req.params;
 
-      const book = await Book.findById(bookId);
-      if (!book) return res.status(404).json({ message: "Book not found" });
+  //     const book = await Book.findById(bookId);
+  //     if (!book) return res.status(404).json({ message: "Book not found" });
 
-      book.doner = memberId;
-      await book.save();
+  //     book.donor = memberId;
+  //     await book.save();
 
-      const donation = await Donate.create({ donor: memberId, book: bookId });
+  //     const donation = await Donate.create({ donor: memberId, book: bookId });
 
-      res.status(201).json({ message: "Donation recorded", donation });
-    } catch (e) {
-      res.status(500).json({ message: e.message });
-    }
-  },
+  //     res.status(201).json({ message: "Donation recorded", donation });
+  //   } catch (e) {
+  //     res.status(500).json({ message: e.message });
+  //   }
+  // },
 
   async getAllDonations(req, res) {
     try {

@@ -5,9 +5,9 @@ const bookSchema = new mongoose.Schema(
     title: { type: String, required: true, trim: true },
     author: { type: String, required: true, trim: true },
     genres: [{ type: String, trim: true }],
-    status: { type: String, enum: ["available", "Not available"], default: "available" },
+    status: { type: String, enum: ["available", "borrowed"], default: "available" },
     description: { type: String, trim: true },
-    doner: { type: String, required: true },
+    donor: { type: String },
     currentHolderId: { type: mongoose.Schema.Types.ObjectId, ref: "Member", default: null },
   },
   { timestamps: true }
