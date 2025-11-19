@@ -25,16 +25,14 @@ const Header = () => {
       <div className="navbar-right">
         <ul>
           {isLoggedIn ? (
-            <>{user?.role !== "admin" && (
-                <li><Link to="/books">Books</Link></li>
+            <>{/* Admin-only link */}
+              {user?.role === "admin" && (
+                <li><Link to="/adminDashboard">Dashboard</Link></li>
               )}
               <li><Link to="/books">Books</Link></li>
               <li><Link to="/add-book">Add Books</Link></li>
 
-              {/* Admin-only link */}
-              {user?.role === "admin" && (
-                <li><Link to="/adminDashboard">Dashboard</Link></li>
-              )}
+              
 
               <li><Link to="/profile">Profile</Link></li>
               <li><Link to="/logout">Logout</Link></li>
