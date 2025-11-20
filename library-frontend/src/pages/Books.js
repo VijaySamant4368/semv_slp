@@ -11,6 +11,10 @@ const Books = () => {
   const [reloadTrigger, setReloadTrigger] = useState(false); // 🔄 NEW
   const navigate = useNavigate();
   const location = useLocation();
+  const [page, setPage] = useState(1);
+  const limit = 20;
+  const [totalPages, setTotalPages] = useState(1);
+
 
   // 🔄 Reload when returning from /books/:id page
   useEffect(() => {
@@ -21,7 +25,7 @@ const Books = () => {
 
   useEffect(() => {
     fetchBooks();
-  }, [search, reloadTrigger]);
+  }, [search, reloadTrigger, page]);
 
   const fetchBooks = async () => {
     try {
@@ -33,16 +37,21 @@ const Books = () => {
 
       const res = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` },
-        params: search ? { search } : {},
+        params: {
+          search: search || undefined,
+          page,
+          limit
+        }
       });
 
-      // 🔽 SORT BY STATUS: Available → Borrowed → Reserved
-      const sorted = res.data.sort((a, b) => {
+      const sorted = res.data.books.sort((a, b) => {
         const order = { "available": 1, "reserved": 2, "borrowed": 3 };
         return order[a.status] - order[b.status];
       });
 
       setBooks(sorted);
+      setTotalPages(res.data.totalPages);
+
     } catch (err) {
       console.error("Error fetching books:", err);
     } finally {
@@ -105,6 +114,24 @@ const Books = () => {
             <p>No books found.</p>
           )}
         </div>
+        <div className="pagination">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(prev => prev - 1)}
+          >
+            Previous
+          </button>
+
+          <span>Page {page} of {totalPages}</span>
+
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage(prev => prev + 1)}
+          >
+            Next
+          </button>
+        </div>
+
 
       </div>
     </div>

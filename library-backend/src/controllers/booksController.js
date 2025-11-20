@@ -69,12 +69,28 @@ export const booksController = {
 
   async getAllBooks(req, res) {
     try {
-      const books = await Book.find();  
-      res.json(books);
+      let page = parseInt(req.query.page) || 1;
+      let limit = parseInt(req.query.limit) || 20;
+      let skip = (page - 1) * limit;
+
+      const totalBooks = await Book.countDocuments();
+      const totalPages = Math.ceil(totalBooks / limit);
+
+      const books = await Book.find()
+        .skip(skip)
+        .limit(limit);
+
+      res.json({
+        books,
+        totalPages,
+        currentPage: page,
+        totalBooks
+      });
     } catch (e) {
       res.status(500).json({ message: e.message });
     }
   },
+
   async getBookById(req, res) {
     try {
       const { bookId } = req.params;
@@ -96,7 +112,7 @@ export const booksController = {
       const updatedBook = await Book.findByIdAndUpdate(
         bookId,
         { title, author, genres, description, coverImage },
-        { new: true } 
+        { new: true }
       );
 
       if (!updatedBook) {
@@ -108,30 +124,43 @@ export const booksController = {
       res.status(500).json({ message: e.message });
     }
   },
-
   async searchBooks(req, res) {
     try {
       const query = req.query.search || "";
 
-      if (!query) {
-        return res.status(400).json({ message: "Search query required" });
-      }
+      let page = parseInt(req.query.page) || 1;
+      let limit = parseInt(req.query.limit) || 20;
+      let skip = (page - 1) * limit;
 
-      const books = await Book.find({
+      const searchCondition = {
         $or: [
           { title: { $regex: query, $options: "i" } },
           { author: { $regex: query, $options: "i" } },
           { description: { $regex: query, $options: "i" } },
           { genres: { $regex: query, $options: "i" } },
         ],
+      };
+
+      const totalBooks = await Book.countDocuments(searchCondition);
+      const totalPages = Math.ceil(totalBooks / limit);
+
+      const books = await Book.find(searchCondition)
+        .skip(skip)
+        .limit(limit);
+
+      res.json({
+        books,
+        totalPages,
+        currentPage: page,
+        totalBooks
       });
 
-      res.json(books);
     } catch (e) {
       console.error("Error searching books:", e);
       res.status(500).json({ message: e.message });
     }
   },
+
 
   async deleteBook(req, res) {
     try {
