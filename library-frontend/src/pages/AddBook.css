@@ -1,52 +1,132 @@
+/* Full page container */
 .addbook-container {
+  width: 100%;
+  height: 100vh;
+  background: #b8c9e1;  /* Your new background color */
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* Shift content towards right */
   align-items: center;
-  padding: 40px;
+  padding-left: 20%; /* Adjust form position */
+  padding-right: 5%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
+/* White form card */
 .addbook-form {
+  width: 420px;
   background: #fff;
-  padding: 50px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  padding: 35px 40px;
+  border-radius: 14px;
+  box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+  margin-right: 60px; /* Helps keep it left of the text */
 }
-textarea{
-  width: 100%;         /* makes it stretch the full width of the form */
-  resize: vertical; 
-}
+
+/* Title */
 .addbook-form h2 {
-  text-align: center;
+  font-size: 26px;
   margin-bottom: 20px;
+  color: #222;
+  font-weight: 700;
+  text-align: center; /* Center the form title */
 }
 
+/* Labels */
 .addbook-form label {
-  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-top: 12px;
   margin-bottom: 5px;
-  font-weight: bold;
 }
 
+/* Inputs (centered padding look) */
 .addbook-form input,
-.addbook-form select {
+.addbook-form textarea {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: 0.25s;
+  outline: none;
 }
 
+.addbook-form input:focus,
+.addbook-form textarea:focus {
+  border-color: #3b6eff;
+  box-shadow: 0px 0px 5px rgba(59, 110, 255, 0.4);
+}
+
+/* Submit Button */
 .addbook-form button {
-  width: 100%;
-  padding: 12px;
-  background-color: #2d89ef;
-  color: #fff;
+  margin-top: 22px;
+  padding: 14px;
+  background: #3b6eff;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: 0.25s;
 }
 
 .addbook-form button:hover {
-  background-color: #1b5fbd;
+  background: #1450ff;
+}
+
+.addbook-form button:disabled {
+  background: #7f98ff;
+  cursor: not-allowed;
+}
+
+/* Text on the right */
+.side-text {
+  position: absolute;
+  right: 12%;
+  width: 380px;
+  color: rgb(72, 64, 106);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: left;
+  z-index: 5;
+}
+
+/* Decorative blurred circle */
+.decor-circle {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: #ffffff35;
+  filter: blur(80px);
+  border-radius: 50%;
+  right: -40px;
+  top: 18%;
+  z-index: 1;
+}
+
+/* Responsive: hide right text on small screens */
+@media (max-width: 900px) {
+  .side-text {
+    display: none;
+  }
+
+  .addbook-container {
+    justify-content: center;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .addbook-form {
+    width: 100%;
+    padding: 28px 24px;
+  }
 }

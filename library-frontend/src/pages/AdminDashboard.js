@@ -104,105 +104,110 @@ const fetchData = async () => {
   };
 
   return (
-    <div className="admin-dashboard">
-      <h2>Borrow Requests</h2>
-      {requests.length === 0 ? (
-        <p>No pending requests.</p>
-      ) : (
-        requests.map((r) => (
-          <div key={r._id} className="request-card">
-            <p>
-              <strong>{r.userId?.name}</strong> requested <em>{r.bookId?.title}</em> - Status: {r.status}
-            </p>
-            {r.status === "pending" && r.bookId?.status !== "borrowed" && (
-              <div className="request-actions">
+  <div className="admin-dashboard">
+
+    <div className="dashboard-grid">
+
+      {/* Borrow Requests */}
+      <div className="section-card">
+        <h3>Borrow Requests</h3>
+
+        {requests.length === 0 ? (
+          <p className="empty-text">No borrow requests</p>
+        ) : (
+          requests.map((r) => (
+            <div key={r._id} className="item">
+              <span className="item-title">{r.bookId?.title}</span>
+
+              {r.status === "pending" ? (
                 <button
-                  className="approve-btn"
+                  className="action-btn approve-btn"
                   onClick={() => handleAction(r._id, "approved", "borrow")}
                 >
                   Approve
                 </button>
-                <button
-                  className="reject-btn"
-                  onClick={() => handleAction(r._id, "rejected", "borrow")}
-                >
-                  Reject
-                </button>
-              </div>
-            )}
-            {r.status === "pending" && r.bookId?.status === "borrowed" && (
-              <p style={{ color: "red" }}>Book already borrowed</p>
-            )}
-          </div>
-        ))
-      )}
-      {requests.length === 5 && (
+              ) : (
+                <span className={`status-badge status-${r.status}`}>
+                  {r.status}
+                </span>
+              )}
+            </div>
+          ))
+        )}
+
         <button className="view-more-btn" onClick={() => navigate("/borrow-requests")}>
-          View More Borrow Requests
+          View More
         </button>
-      )}
+      </div>
 
-      <h2>Donation Requests</h2>
-      {donationRequests.length === 0 ? (
-        <p>No pending donation requests.</p>
-      ) : (
-        donationRequests.map((d) => (
-          <div key={d._id} className="request-card">
-            <p>
-              <strong>{d.donor?.name}</strong> wants to donate <em>{d.title}</em> - Status: {d.status}
-            </p>
-            {d.status === "pending" && (
-              <div className="request-actions">
-                <button
-                  className="approve-btn"
-                  onClick={() => handleAction(d._id, "approved", "donation")}
-                >
-                  Approve
-                </button>
-                <button
-                  className="reject-btn"
-                  onClick={() => handleAction(d._id, "rejected", "donation")}
-                >
-                  Reject
-                </button>
-              </div>
-            )}
-            {d.status !== "pending" && (
-              <p style={{ color: d.status === "approved" ? "green" : "red" }}>
-                {d.status.charAt(0).toUpperCase() + d.status.slice(1)}
-              </p>
-            )}
-          </div>
-        ))
-      )}
-      {donationRequests.length === 5 && (
+      {/* Donation Requests */}
+      <div className="section-card">
+        <h3>Donation Requests</h3>
+
+        {donationRequests.length === 0 ? (
+          <p className="empty-text">No donation requests</p>
+        ) : (
+          donationRequests.map((d) => (
+            <div key={d._id} className="item">
+              <span className="item-title">{d.title}</span>
+
+              {d.status === "pending" ? (
+                <div>
+                  <button
+                    className="action-btn approve-btn"
+                    onClick={() => handleAction(d._id, "approved", "donation")}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="action-btn reject-btn"
+                    onClick={() => handleAction(d._id, "rejected", "donation")}
+                  >
+                    Reject
+                  </button>
+                </div>
+              ) : (
+                <span className={`status-badge status-${d.status}`}>
+                  {d.status}
+                </span>
+              )}
+            </div>
+          ))
+        )}
+
         <button className="view-more-btn" onClick={() => navigate("/donation-requests")}>
-          View More Donation Requests
+          View More
         </button>
-      )}
+      </div>
 
-      <h2>Currently Borrowed Books</h2>
-      {borrowedBooks.length === 0 ? (
-        <p>No books currently borrowed.</p>
-      ) : (
-        borrowedBooks.map((b) => (
-          <div key={b._id} className="request-card">
-            <p>
-              <strong>{b.borrower?.name}</strong> borrowed <em>{b.book?.title}</em>
-            </p>
-            <button className="approve-btn" onClick={() => handleReturn(b._id)}>
-              Mark as Returned
-            </button>
-          </div>
-        ))
-      )}
-      {borrowedBooks.length === 10 && (
+      {/* Currently Borrowed */}
+      <div className="section-card">
+        <h3>Currently Borrowed</h3>
+
+        {borrowedBooks.length === 0 ? (
+          <p className="empty-text">No borrowed books</p>
+        ) : (
+          borrowedBooks.map((b) => (
+            <div key={b._id} className="item">
+              <span className="item-title">{b.book?.title}</span>
+              <button
+                className="action-btn return-btn"
+                onClick={() => handleReturn(b._id)}
+              >
+                Return
+              </button>
+            </div>
+          ))
+        )}
+
         <button className="view-more-btn" onClick={() => navigate("/borrowed-books")}>
-          View More Borrowed Books
+          View More
         </button>
-      )}
+      </div>
+
     </div>
-  );
+  </div>
+);
 };
 
 export default AdminDashboard;

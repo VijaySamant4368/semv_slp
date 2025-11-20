@@ -14,21 +14,17 @@ const DonationRequests = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Separate pending and non-pending donation requests
-        const pendingRequests = res.data.filter((r) => r.status === "pending")
-          .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate)); // Newest first
+        const pending = res.data
+          .filter((r) => r.status === "pending")
+          .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate));
 
-        const nonPendingRequests = res.data.filter((r) => r.status !== "pending")
-          .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate)); // Newest first
+        const nonPending = res.data
+          .filter((r) => r.status !== "pending")
+          .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate));
 
-        // Combine pending requests first, followed by non-pending
-        const sortedRequests = [...pendingRequests, ...nonPendingRequests];
-
-        // Set the sorted requests (you can slice to show top 5 requests)
-        setRequests(sortedRequests.slice(0, 5)); // Show top 5 most recent requests
-
+        setRequests([...pending, ...nonPending]);
       } catch (err) {
-        console.error("Error fetching donation requests:", err);
+        console.error("Error:", err);
       }
     };
 
@@ -38,27 +34,49 @@ const DonationRequests = () => {
   return (
     <div className="admin-dashboard">
       <h2>All Donation Requests</h2>
-      {requests.length === 0 ? (
-        <p className="empty-text">No donation requests.</p>
-      ) : (
-        requests.map((d) => (
-          <div key={d._id} className="request-card">
-            <p>
-              <strong>{d.donor?.name || "Unknown Donor"}</strong> wants to donate <em>{d.title || "Untitled Book"}</em> by <strong>{d.author || "Unknown Author"}</strong>
-            </p>
-            <p>{d.description || "No description available."}</p>
-            <p>Status: <span className={`status-${d.status}`}>{d.status.charAt(0).toUpperCase() + d.status.slice(1)}</span></p>
-            <div className="request-actions">
-              {d.status === "pending" && (
-                <>
-                  <button className="approve-btn">Approve</button>
-                  <button className="reject-btn">Reject</button>
-                </>
-              )}
+
+      <div className="grid-container">
+        {requests.length === 0 ? (
+          <p className="empty-text">No donation requests available.</p>
+        ) : (
+          requests.map((d) => (
+            <div key={d._id} className="view-card">
+              <h3 className="card-title">{d.title}</h3>
+
+              <p className="card-line">
+                <strong>{d.donor?.name}</strong> wants to donate <em>{d.title}</em>
+              </p>
+
+              {d.status === "pending" ? (
+  <button
+    className="approve-btn"
+    onClick={async () => {
+      try {
+        await axios.patch(
+          `http://localhost:4000/api/donation-requests/approved/${d._id}`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        setRequests((prev) =>
+          prev.map((item) =>
+            item._id === d._id ? { ...item, status: "approved" } : item
+          )
+        );
+      } catch (err) {
+        console.error("Error approving donation:", err);
+      }
+    }}
+  >
+    Approve
+  </button>
+) : (
+  <span className="status-approved">Approved</span>
+)}
             </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 };

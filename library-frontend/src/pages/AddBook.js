@@ -95,6 +95,11 @@ const AddBook = () => {
 
   return (
     <div className="addbook-container">
+      <div className="side-text">
+  Every donated book finds a new reader, sparks inspiration,
+  and brings knowledge into someone’s hands.
+</div>
+<div className="decor-circle"></div>
       <form className="addbook-form" onSubmit={handleSubmit}>
         <h2>Donate a Book</h2>
 

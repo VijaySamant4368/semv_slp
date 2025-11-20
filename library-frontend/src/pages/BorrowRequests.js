@@ -14,19 +14,15 @@ const BorrowRequests = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Separate pending and non-pending borrow requests
-        const pendingRequests = res.data.filter((r) => r.status === "pending")
-          .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate)); // Newest first
+        const pending = res.data
+          .filter((r) => r.status === "pending")
+          .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate));
 
-        const nonPendingRequests = res.data.filter((r) => r.status !== "pending")
-          .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate)); // Newest first
+        const nonPending = res.data
+          .filter((r) => r.status !== "pending")
+          .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate));
 
-        // Combine pending requests first, followed by non-pending
-        const sortedRequests = [...pendingRequests, ...nonPendingRequests];
-
-        // Set the sorted requests (you can slice to show top 5 requests)
-        setRequests(sortedRequests.slice(0, 5)); // Show top 5 most recent requests
-
+        setRequests([...pending, ...nonPending]);
       } catch (err) {
         console.error("Error fetching borrow requests:", err);
       }
@@ -38,25 +34,51 @@ const BorrowRequests = () => {
   return (
     <div className="admin-dashboard">
       <h2>All Borrow Requests</h2>
-      {requests.length === 0 ? (
-        <p className="empty-text">No borrow requests.</p>
-      ) : (
-        requests.map((r) => (
-          <div key={r._id} className="request-card">
-            <p>
-              <strong>{r.userId?.name || "Unknown User"}</strong> requested <em>{r.bookId?.title || "Untitled Book"}</em> - Status: {r.status}
-            </p>
-            <div className="request-actions">
-              {r.status === "pending" && (
-                <>
-                  <button className="approve-btn">Approve</button>
-                  <button className="reject-btn">Reject</button>
-                </>
-              )}
+
+      <div className="grid-container">
+        {requests.length === 0 ? (
+          <p className="empty-text">No borrow requests found.</p>
+        ) : (
+          requests.map((r) => (
+            <div key={r._id} className="view-card">
+              <h3 className="card-title">{r.bookId?.title}</h3>
+
+              <p className="card-line">
+                <strong>{r.userId?.name}</strong> requested <em>{r.bookId?.title}</em>
+              </p>
+
+              {r.status === "pending" ? (
+  <button
+    className="approve-btn"
+    onClick={async () => {
+      try {
+        await axios.patch(
+          `http://localhost:4000/api/borrows/update/${r._id}`,
+          { status: "approved" },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        setRequests((prev) =>
+          prev.map((item) =>
+            item._id === r._id ? { ...item, status: "approved" } : item
+          )
+        );
+      } catch (err) {
+        console.error("Approval failed:", err);
+      }
+    }}
+  >
+    Approve
+  </button>
+) : (
+  <span className="status-approved">Approved</span>
+)}
+
+
             </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 };

@@ -82,33 +82,46 @@ const Books = () => {
           {books.length > 0 ? (
             books.map((book) => (
               <div key={book._id} className="book-card" title={book.title}>
+  <div className="book-cover-div">
+    <img
+      src={
+        book.coverImage ||
+        "https://via.placeholder.com/150?text=No+Cover"
+      }
+      alt={book.title}
+      className="book-cover"
+    />
+  </div>
 
-                <div className="book-cover-div">
-                  <img
-                    src={
-                      book.coverImage ||
-                      "https://via.placeholder.com/150?text=No+Cover"
-                    }
-                    alt={book.title}
-                    className="book-cover"
-                  />
-                </div>
+  <h3>{book.title}</h3>
+  <p>By {book.author}</p>
 
-                <h3>{book.title}</h3>
-                <p>By {book.author}</p>
-                <p className="status">Status: {book.status}</p>
+  <div className="bottom-section">
+    <span className={`status-badge ${
+      book.status === "available" ? "available" :
+      book.status === "borrowed" ? "borrowed" : "reserved"
+    }`}>
+      {
+        book.status === "available"
+          ? "Available"
+          : book.status === "borrowed"
+          ? "Borrowed"
+          : "Reserved"
+      }
+    </span>
+    <button
+      onClick={() =>
+        navigate(`/books/${book._id}`, {
+          state: { fromBooks: true }
+        })
+      }
+      className="view-btn"
+    >
+      View
+    </button>
+  </div>
+</div>
 
-                <button
-                  onClick={() =>
-                    navigate(`/books/${book._id}`, {
-                      state: { fromBooks: true }
-                    })
-                  }
-                >
-                  View
-                </button>
-
-              </div>
             ))
           ) : (
             <p>No books found.</p>
