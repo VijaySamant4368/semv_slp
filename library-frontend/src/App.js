@@ -21,6 +21,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import BorrowRequests from "./pages/BorrowRequests";
 import DonationRequests from "./pages/DonationRequests";
 import BorrowedBooks from "./pages/BorrowedBooks";
+import AdminProfile from "./pages/AdminProfile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,7 +38,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
-
+        <Route path="/admin-profile" element={<AdminProfile />} />
         {/* Protected Pages */}
         <Route
           path="/books"

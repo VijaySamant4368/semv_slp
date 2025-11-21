@@ -7,13 +7,14 @@ const borrowSchema = new mongoose.Schema(
     borrowDate: { type: Date, default: Date.now },
     returnDate: { type: Date},
     status: { type: String, enum: ["borrowed", "returned"], default: "borrowed" },
+    reminderSent: { type: Boolean, default: false }
   },
   { timestamps: true }
 );
 
 borrowSchema.pre("save", function (next) {
   if (!this.returnDate) {
-    const twoWeeks = 14 * 24 * 60 * 60 * 1000;
+    const twoWeeks =  60 * 60 * 1000;
     this.returnDate = new Date(this.borrowDate.getTime() + twoWeeks);
   }
   next();

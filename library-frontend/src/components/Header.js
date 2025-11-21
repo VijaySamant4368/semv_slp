@@ -15,6 +15,9 @@ const Header = () => {
 
   const isLoggedIn = !!getToken();
 
+  // Determine profile link based on role
+  // const profileLink = user?.role === "admin" ? "/admin-profile" : "/profile";
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -25,22 +28,20 @@ const Header = () => {
       <div className="navbar-right">
         <ul>
           {isLoggedIn ? (
-            <>{/* Admin-only link */}
+            <>
+              {/* Admin-only link */}
               {user?.role === "admin" && (
                 <li><Link to="/adminDashboard">Dashboard</Link></li>
               )}
               <li><Link to="/books">Books</Link></li>
               <li><Link to="/add-book">Add Books</Link></li>
-
-              
-
               <li><Link to="/profile">Profile</Link></li>
               <li><Link to="/logout">Logout</Link></li>
             </>
           ) : (
             <>
               <li><Link to="/login">Login</Link></li>
-              <li><Link to="/Register">Register</Link></li>
+              <li><Link to="/register">Register</Link></li>
             </>
           )}
         </ul>

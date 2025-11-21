@@ -5,6 +5,7 @@ import "./AdminDashboard.css";
 
 const BorrowedBooks = () => {
   const [books, setBooks] = useState([]);
+  const [search, setSearch] = useState("");
   const token = getToken();
 
   useEffect(() => {
@@ -44,21 +45,35 @@ const BorrowedBooks = () => {
     }
   };
 
+  // Filter books based on borrower name
+  const filteredBooks = books.filter((b) =>
+    b.borrower?.name?.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="admin-dashboard">
       <h2>All Borrowed Books</h2>
 
-      <div className="grid-container">
-        {books.length === 0 ? (
-          <p className="empty-text">No books currently borrowed.</p>
-        ) : (
-          books.map((b) => (
-            <div key={b._id} className="view-card">
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search by borrower name..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
+      <div className="grid-container">
+        {filteredBooks.length === 0 ? (
+          <p className="empty-text">
+            {search ? "No matching borrowed books." : "No books currently borrowed."}
+          </p>
+        ) : (
+          filteredBooks.map((b) => (
+            <div key={b._id} className="view-card">
               <h3 className="card-title">{b.book?.title}</h3>
 
               <p className="card-line">
-                <strong>{b.borrower?.name}</strong>({b.borrower?.phone}) borrowed{" "}
+                <strong>{b.borrower?.name}</strong> ({b.borrower?.phone}) borrowed{" "}
                 <em>{b.book?.title}</em>
               </p>
               <p className="card-line">
@@ -80,7 +95,6 @@ const BorrowedBooks = () => {
                   <span className="status-returned">Returned</span>
                 )}
               </div>
-
             </div>
           ))
         )}

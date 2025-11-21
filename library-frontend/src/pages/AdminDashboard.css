@@ -192,3 +192,12 @@
 .approve-btn:hover {
   background: #218838;
 }
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

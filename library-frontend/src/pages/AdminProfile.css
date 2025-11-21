@@ -1,0 +1,207 @@
+/* ============================
+   ADMIN PAGE LAYOUT
+===============================*/
+.admin-profile-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 2.5rem;
+  font-family: "Inter", sans-serif;
+  color: #222;
+  min-height: 100vh;
+
+  background: linear-gradient(145deg, #f2f9ff, #e8f3ff);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================
+   HEADER (Avatar + Name)
+===============================*/
+.admin-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.admin-avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 4px solid #ffffff;
+  background: #dff1ff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.admin-avatar:hover {
+  transform: scale(1.05);
+}
+
+.admin-header h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: #0b3d6d;
+}
+
+.admin-role-text {
+  font-size: 1.05rem;
+  color: #c4972f; /* gold accent */
+  font-weight: 600;
+}
+
+/* ============================
+   ACTION BUTTON
+===============================*/
+.admin-action-btn {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 2rem;
+
+  padding: 0.65rem 1.4rem;
+  background: #ffffff;
+  color: #0e4b7e;
+
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+
+  box-shadow: 0 3px 12px rgba(13,100,171,0.15);
+  cursor: pointer;
+
+  transition: transform 0.2s, background 0.2s;
+}
+
+.admin-action-btn:hover {
+  background: #e4f3ff;
+  transform: translateY(-2px);
+}
+
+/* ============================
+   STATS GRID (IF USED LATER)
+===============================*/
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.admin-stat-card {
+  background: #ffffff;
+  padding: 1.3rem 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+  transition: transform 0.2s;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.admin-stat-title {
+  color: #0f4c82;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.admin-stat-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1d75c8;
+}
+
+/* ============================
+   SECTION HEADINGS
+===============================*/
+.admin-section h3 {
+  margin-bottom: 0.8rem;
+  color: #0f4c82;
+  font-weight: 700;
+  border-left: 4px solid #c4972f;
+  padding-left: 10px;
+}
+
+/* ============================
+   TABLE STYLING
+===============================*/
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin-bottom: 2rem;
+}
+
+.admin-table thead th {
+  background: #d7e9ff;
+  color: #0c3f66;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+  border-radius: 6px 6px 0 0;
+}
+
+.admin-table tbody tr {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: background 0.2s;
+}
+
+.admin-table tbody td {
+  padding: 0.9rem 1rem;
+}
+
+.admin-table tbody tr:hover {
+  background: #eef7ff;
+}
+
+/* ============================
+   FOOTER
+===============================*/
+.admin-footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: #52667a;
+  font-size: 1rem;
+}
+
+.admin-footer .admin-social i {
+  font-size: 1.3rem;
+  margin: 0 0.7rem;
+  color: #7a9ab8;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.admin-footer .admin-social i:hover {
+  color: #3b8dd7;
+  transform: scale(1.2);
+}
+
+.dashboard-grid {
+  display: flex;
+  gap: 20px;
+}
+
+/* 25% width for Borrow Requests and Donation Requests */
+.dashboard-grid .section-card:nth-child(1),
+.dashboard-grid .section-card:nth-child(2) {
+  flex: 1 1 25%;
+}
+
+/* 50% width for Currently Borrowed */
+.dashboard-grid .section-card:nth-child(3) {
+  flex: 1 1 50%;
+}
