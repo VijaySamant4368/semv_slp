@@ -164,15 +164,28 @@ async signup(req, res) {
   },
 
   async getIssuingHistory(req, res) {
-    try {
-      const { memberId } = req.params;
-      const history = await Borrow.find({ borrower: memberId })
-        .populate("book", "title author")
-        .sort({ createdAt: -1 });
-      res.json(history);
-    } catch (e) {
-      res.status(500).json({ message: e.message });
-    }
+
+  const startTime = Date.now(); // Start time tracking
+  
+  try {
+    const { memberId } = req.params;
+    const history = await Borrow.find({ borrower: memberId })
+      .populate("book", "title author")
+      .sort({ createdAt: -1 });
+
+    const endTime = Date.now(); // End time tracking
+    const duration = endTime - startTime; // Calculate duration
+    console.log(`getIssuingHistory took ${duration}ms`); // Log the duration
+
+    res.json(history);
+  } catch (e) {
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    console.log(`getIssuingHistory failed after ${duration}ms`);
+    res.status(500).json({ message: e.message });
+  }
+
+
   },
 
   async getDonationHistory(req, res) {

@@ -26,6 +26,8 @@ const BorrowedBooks = () => {
     fetchBorrowed();
   }, [token]);
 
+  
+
   // Handle return book
   const handleReturn = async (id) => {
     try {
@@ -45,10 +47,14 @@ const BorrowedBooks = () => {
     }
   };
 
-  // Filter books based on borrower name
-  const filteredBooks = books.filter((b) =>
-    b.borrower?.name?.toLowerCase().includes(search.toLowerCase())
-  );
+    const filteredBooks = books.filter((b) => {
+  const name = b.borrower?.name?.toLowerCase() || "";
+  const phone = b.borrower?.phone || "";
+  const query = search.toLowerCase();
+
+  return name.includes(query) || phone.includes(query);
+});
+
 
   return (
     <div className="admin-dashboard">
