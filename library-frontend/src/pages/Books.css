@@ -3,12 +3,12 @@
 }
 
 .books {
-  
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;  
 }
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -88,20 +88,19 @@ h2 {
   display: inline-block;
   padding: 5px 14px;
   border-radius: 16px;
-  color: #fff;
   font-weight: 500;
   font-size: 0.95em;
   margin-bottom: 1px;
 }
 
 .status-badge.available {
-    background: #dff6e5;
+  background: #dff6e5;
   border: 1px solid #a2e2b3;
-  color: #0e8b42
+  color: #0e8b42;
 }
 
 .status-badge.borrowed {
-    background: #ffe6e8;
+  background: #ffe6e8;
   border: 1px solid #f4babc;
   color: #c73535;
 }
@@ -126,4 +125,31 @@ h2 {
   background-color: #2980b9;
 }
 
+@media (max-width: 768px) {
+  .search-bar input {
+    width: 80%;
+  }
 
+  .book-card {
+    width: 45%;
+    height: auto;
+  }
+
+  .book-cover {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-card {
+    width: 90%;
+  }
+
+  .book-cover {
+    height: 180px;
+  }
+
+  .search-bar input {
+    width: 90%;
+  }
+}

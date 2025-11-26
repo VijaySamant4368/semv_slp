@@ -1,6 +1,6 @@
-/* ============================
-   GENERAL PAGE LAYOUT
-===============================*/
+/* ----------------------------
+   PROFILE CONTAINER 
+-------------------------------*/
 .profile-container {
   max-width: 900px;
   margin: 40px auto;
@@ -8,21 +8,21 @@
   font-family: "Inter", sans-serif;
   color: #222;
   min-height: 100vh;
-
   background: linear-gradient(145deg, #f2f9ff, #e8f3ff);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   animation: fadeIn 0.5s ease-in-out;
 }
 
+/* FadeIn Animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ============================
-   HEADER (Avatar + Name)
-===============================*/
+/* ----------------------------
+   PROFILE HEADER (Avatar, Name, Email)
+-------------------------------*/
 .profile-header {
   display: flex;
   flex-direction: column;
@@ -36,11 +36,9 @@
   height: 130px;
   border-radius: 50%;
   object-fit: cover;
-
   border: 4px solid #ffffff;
   background: #dff1ff;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-
   transition: transform 0.3s;
 }
 
@@ -59,24 +57,18 @@
   color: #1d75c8;
 }
 
-/* ============================
-   EDIT BUTTON
-===============================*/
 .edit-profile {
   display: block;
   margin-left: auto;
   margin-bottom: 2rem;
   padding: 0.65rem 1.4rem;
-
   background: #ffffff;
   color: #0e4b7e;
   border: none;
   border-radius: 8px;
   font-weight: 600;
-
   box-shadow: 0 3px 12px rgba(13,100,171,0.15);
   cursor: pointer;
-
   transition: transform 0.2s, background 0.2s;
 }
 
@@ -85,23 +77,21 @@
   transform: translateY(-2px);
 }
 
-/* ============================
-   EDIT PROFILE FORM
-===============================*/
+/* ----------------------------
+   EDIT PROFILE FORM 
+-------------------------------*/
 .edit-form {
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(10px);
-
   padding: 1.8rem 2rem;
   border-radius: 12px;
-
   box-shadow: 0 8px 20px rgba(0,0,0,0.05);
   animation: slideDown 0.3s ease;
 }
 
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .edit-form h3 {
@@ -121,13 +111,10 @@
 .edit-form input {
   width: 100%;
   padding: 0.7rem;
-
   border-radius: 8px;
   border: 1px solid #cde1f6;
-
   font-size: 1rem;
   background: #f8fcff;
-
   transition: border 0.2s, box-shadow 0.2s;
   margin-bottom: 1rem;
 }
@@ -166,18 +153,15 @@
   transform: translateY(-2px);
 }
 
-/* ============================
+/* ----------------------------
    SECTION HEADINGS
-===============================*/
+-------------------------------*/
 .profile-section h3 {
   margin-bottom: 0.8rem;
   color: #0f4c82;
   font-weight: 700;
 }
 
-/* ============================
-   TABLE STYLING
-===============================*/
 .profile-table {
   width: 100%;
   border-collapse: separate;
@@ -204,9 +188,9 @@
   background: #eef7ff;
 }
 
-/* ============================
+/* ----------------------------
    BADGES
-===============================*/
+-------------------------------*/
 .badge {
   padding: 5px 18px;
   border-radius: 16px;
@@ -226,9 +210,9 @@
   color: #c73535;
 }
 
-/* ============================
-   FOOTER
-===============================*/
+/* ----------------------------
+   FOOTER 
+-------------------------------*/
 .profile-footer {
   text-align: center;
   margin-top: 2rem;
@@ -247,4 +231,102 @@
 .profile-footer .profile-social i:hover {
   color: #3b8dd7;
   transform: scale(1.2);
+}
+
+/* ----------------------------
+   RESPONSIVENESS 
+-------------------------------*/
+
+/* -------- Tablet & Large Phone Screens (max-width: 1024px) -------- */
+@media (max-width: 1024px) {
+  .profile-container {
+    max-width: 85%;
+    padding: 2rem;
+  }
+
+  .profile-avatar {
+    width: 110px;
+    height: 110px;
+  }
+
+  .profile-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .edit-profile {
+    padding: 0.5rem 1rem;
+  }
+
+  .edit-form {
+    padding: 1.5rem 1.8rem;
+  }
+
+  .profile-table td,
+  .profile-table th {
+    padding: 0.75rem;
+  }
+}
+
+/* -------- Small Screens (max-width: 768px) -------- */
+@media (max-width: 768px) {
+  .profile-container {
+    max-width: 90%;
+  }
+
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .edit-profile {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .edit-form {
+    padding: 1.4rem 1.6rem;
+  }
+
+  .profile-footer {
+    font-size: 0.9rem;
+  }
+
+  .profile-table {
+    font-size: 0.9rem;
+  }
+}
+
+/* -------- Mobile Screens (max-width: 480px) -------- */
+@media (max-width: 480px) {
+  .profile-container {
+    max-width: 95%;
+    padding: 1.5rem;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .edit-profile {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .edit-form {
+    padding: 1.2rem 1.4rem;
+  }
+
+  .profile-table td,
+  .profile-table th {
+    padding: 0.5rem;
+  }
 }

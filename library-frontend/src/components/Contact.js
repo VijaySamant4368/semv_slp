@@ -23,7 +23,7 @@ const Contact = () => (
         <b>Vijay Nagar</b><br /> Every Saturday - 12:00 PM to 5:00 PM
       </li>
       <li>
-        <b>DUWA (DU)</b><br /> Saturdays - 11:00 AM to 5:00 PM
+        <b>DUWA (DU)</b><br /> Every Friday - 11:00 AM to 5:00 PM
       </li>
       <li>
         <b>Faculty Of Arts(DU)</b><br /> Every Monday - 12:00 PM to 5:00 PM

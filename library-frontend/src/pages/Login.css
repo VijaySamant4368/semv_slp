@@ -1,22 +1,23 @@
-/* Full page layout */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: #1B3C53;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* Form wrapper */
 .login-form-wrapper {
-  width: 90%;
+  width: 100%;
   max-width: 360px;
   background: #ffffff;
   padding: 3rem;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   text-align: left;
+  box-sizing: border-box;
 }
 
 .login-form-wrapper h2 {
@@ -26,7 +27,6 @@
   color: #1B3C53;
 }
 
-/* Labels */
 .login-form label {
   display: block;
   font-size: 0.9rem;
@@ -35,7 +35,6 @@
   font-weight: 600;
 }
 
-/* Inputs */
 .login-form input {
   width: 100%;
   padding: 0.85rem 0.4rem;
@@ -45,13 +44,13 @@
   font-size: 1rem;
   outline: none;
   transition: border-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .login-form input:focus {
   border-color: #1B3C53;
 }
 
-/* Password field */
 .password-field {
   position: relative;
 }
@@ -66,14 +65,12 @@
   color: #555;
 }
 
-/* Error message */
 .error-message {
   color: #ff4d4d;
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
 
-/* Button */
 .login-form button {
   width: 100%;
   padding: 0.9rem;
@@ -97,7 +94,6 @@
   cursor: not-allowed;
 }
 
-/* Register text */
 .register-text {
   font-size: 0.9rem;
   margin-top: 1.5rem;
@@ -113,4 +109,65 @@
 
 .register-text a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .login-form-wrapper {
+    padding: 2.2rem;
+  }
+
+  .login-form-wrapper h2 {
+    font-size: 1.6rem;
+  }
+
+  .login-form input {
+    padding: 0.8rem;
+  }
+
+  .login-form button {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-wrapper {
+    padding: 1.8rem;
+  }
+
+  .login-form-wrapper h2 {
+    font-size: 1.45rem;
+  }
+
+  .login-form input {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+
+  .login-form label {
+    font-size: 0.85rem;
+  }
+
+  .login-form button {
+    font-size: 0.95rem;
+    padding: 0.8rem;
+  }
+
+  .register-text {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-form-wrapper {
+    padding: 1.4rem;
+  }
+
+  .login-form-wrapper h2 {
+    font-size: 1.3rem;
+  }
+
+  .login-form button {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
 }

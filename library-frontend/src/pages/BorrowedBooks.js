@@ -26,7 +26,7 @@ const BorrowedBooks = () => {
     fetchBorrowed();
   }, [token]);
 
-  
+
 
   // Handle return book
   const handleReturn = async (id) => {
@@ -47,26 +47,32 @@ const BorrowedBooks = () => {
     }
   };
 
-    const filteredBooks = books.filter((b) => {
-  const name = b.borrower?.name?.toLowerCase() || "";
-  const phone = b.borrower?.phone || "";
-  const query = search.toLowerCase();
+  const filteredBooks = books.filter((b) => {
+    const name = b.borrower?.name?.toLowerCase() || "";
+    const phone = b.borrower?.phone || "";
+    const query = search.toLowerCase();
 
-  return name.includes(query) || phone.includes(query);
-});
+    return name.includes(query) || phone.includes(query);
+  });
 
 
   return (
     <div className="admin-dashboard">
       <h2>All Borrowed Books</h2>
 
-      <input
-        type="text"
-        className="search-input"
-        placeholder="Search by borrower name..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+
+      <div class="search-input-wrapper">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search by borrower name..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <i class="fas fa-search"></i>
+      </div>
+
+
 
       <div className="grid-container">
         {filteredBooks.length === 0 ? (
