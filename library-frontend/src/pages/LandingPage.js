@@ -4,17 +4,17 @@ import "./LandingPage.css";
 const cardData = [
   {
     title: "Delhi Book Fair",
-    img: "https://images.unsplash.com/photo-1512820790803-83ca734da794",
+    img: "/landingpage/img1.webp",
     text: "Highlights from the latest Delhi Book Fair. Inspiring events and more."
   },
   {
     title: "Library Outreach",
-    img: "https://images.unsplash.com/photo-1465101162946-4377e57745c3",
+    img: "/landingpage/img2.jpg",
     text: "Volunteers in action connecting communities with books and joy."
   },
   {
     title: "Campus Drives",
-    img: "https://images.unsplash.com/photo-1470163386268-7c4613b71b1b",
+    img: "/landingpage/img3.jpeg",
     text: "Our successful campus book drives helping students nationwide."
   }
 ];
