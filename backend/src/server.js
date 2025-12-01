@@ -16,7 +16,7 @@ import donationRequestRoutes from "./routes/donationRequestRoutes.js";
 const app = express();
 
 app.use(cors({
-  origin: "https://bhc-website.vercel.app",
+  origin: "https://semv-slp.vercel.app/",
   credentials: true,
 }));
 app.use(express.json({ limit: "1mb" }));
