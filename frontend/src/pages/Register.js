@@ -14,7 +14,7 @@ const Register = () => {
   });
 
   const [otp, setOtp] = useState("");
-  const [memberId, setMemberId] = useState(null);
+  // const [memberId, setMemberId] = useState(null);
   const [showOtp, setShowOtp] = useState(false);
 
   const navigate = useNavigate();
@@ -23,9 +23,10 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("REGISTER BUTTON CLICKED ✅", formData);
 
     if (formData.password !== formData.confirmPassword) {
       showToast("Passwords do not match!", "error");
@@ -42,8 +43,8 @@ const Register = () => {
 
       if (res.data?.success) {
         showToast(res.data.message);
-        setMemberId(res.data.memberId);
-        setShowOtp(true); 
+        // setMemberId(res.data.memberId);
+        setShowOtp(true);
       } else {
         showToast(res.data.message || "Signup failed", "error");
       }
@@ -66,7 +67,7 @@ const Register = () => {
         email: formData.email,
         password: formData.password,
         phone: formData.phone,
-        otp, 
+        otp,
       });
 
       if (res.data?.success) {
@@ -85,7 +86,11 @@ const Register = () => {
       <div className="register-container">
         <form
           className="register-form"
-          onSubmit={showOtp ? (e) => e.preventDefault() : handleSubmit}
+          onSubmit={(e) => {
+            e.preventDefault();
+            showOtp ? handleVerifyOtp() : handleSubmit(e);
+          }}
+
         >
 
           <h2>Create Account</h2>
@@ -157,8 +162,8 @@ const Register = () => {
                 required
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    e.preventDefault(); 
-                    handleVerifyOtp();   
+                    e.preventDefault();
+                    handleVerifyOtp();
                   }
                 }}
               />
