@@ -46,7 +46,7 @@ async signup(req, res) {
     console.log("OTP saved:", otpCode);
 
     const data = {
-      from: process.env.MAILGUN_FROM,
+      from: process.env.MAILGUN_FROM_EMAIL,
       to: [email],
       subject: "Verify your email",
       text: `Your OTP is: ${otpCode}. It expires in 10 minutes.`,
