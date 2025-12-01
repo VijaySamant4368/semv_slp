@@ -15,10 +15,28 @@ import donationRequestRoutes from "./routes/donationRequestRoutes.js";
 
 const app = express();
 
+const allowedOrigins = [
+  "https://bhc-website.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:5173"
+];
+
 app.use(cors({
-  origin: "https://bhc-website.vercel.app",
+  origin: function (origin, callback) {
+    // allow curl, postman, server calls
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
+
+app.options("*", cors());
+
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan("dev"));
 
