@@ -95,10 +95,32 @@ const AddBook = () => {
 
   return (
     <div className="addbook-container">
-      <div className="side-text">
-  Every donated book finds a new reader, sparks inspiration,
-  and brings knowledge into someone’s hands.
+      <div className="side-panel">
+  <h1 className="side-heading">Donate Books<br />Save The Planet</h1>
+
+  <div className="impact-row">
+    <div className="impact-box">
+      <h3>For Every 100 Donated Books:</h3>
+      <p>🌳 1 full grown tree saved</p>
+      <p>⚡ 800 kWh electricity saved</p>
+      <p>🌬️ 100 kg CO₂ prevented</p>
+    </div>
+
+    <div className="impact-box">
+      <h3>Per Book Shared:</h3>
+      <p>💧 30 liters water saved</p>
+      <p>⚡ 8 kWh electricity saved</p>
+      <p>🌬️ 1 kg CO₂ prevented</p>
+    </div>
+  </div>
+
+  <p className="why-text">
+    <strong>Why it matters: </strong>
+    Producing paper for new books consumes trees, water, energy, and releases carbon.
+    Sharing or donating reduces deforestation, water wastage, and climate-heating emissions.
+  </p>
 </div>
+
 <div className="decor-circle"></div>
       <form className="addbook-form" onSubmit={handleSubmit}>
         <h2>Donate a Book</h2>
@@ -173,13 +195,6 @@ const AddBook = () => {
           </p>
         )}
       </form>
-<div className="image-gallery">
-        <img src="image1_url" alt="image1" />
-        <img src="image2_url" alt="image2" />
-        <img src="image3_url" alt="image3" />
-        <img src="image4_url" alt="image4" />
-      </div>
-
     </div>
   );
 };
