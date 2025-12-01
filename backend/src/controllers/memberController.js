@@ -3,6 +3,7 @@ import Member from "../models/Member.js";
 import Borrow from "../models/Borrow.js";
 import Donate from "../models/Donate.js";
 import transporter from "../jobs/nodemailer.js";
+import { sendEmail } from "../jobs/brevoClient.js";
 
 
 import Otp from "../models/Otp.js";
@@ -47,13 +48,12 @@ async signup(req, res) {
 
     console.log("✅ OTP saved:", otpCode);
 
-    // ✅ SEND EMAIL USING BREVO
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,   // VERIFIED EMAIL IN BREVO
-      to: email,
-      subject: "Verify your email",
-      text: `Your OTP is: ${otpCode}. It expires in 10 minutes.`,
-    });
+  await sendEmail({
+    to: email,
+    subject: "Verify your email",
+    text: `Your OTP is: ${otpCode}. It expires in 10 minutes.`,
+  });
+
 
     console.log("✅ OTP Sent via Brevo");
 

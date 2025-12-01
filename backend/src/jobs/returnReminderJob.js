@@ -1,5 +1,5 @@
-import transporter from "./nodemailer.js";
 import Borrow from "../models/Borrow.js";
+import { sendEmail } from "./brevoClient.js";
 
 export async function sendReturnReminders() {
   try {
@@ -23,18 +23,19 @@ export async function sendReturnReminders() {
       const email = record.borrower.email;
       const name = record.borrower.name;
 
-      await transporter.sendMail({
-        from: process.env.EMAIL_FROM, // verified Brevo sender
+      const text = `Hello ${name},\n\nThis is a friendly reminder that your borrowed book "${record.bookTitle}" is due tomorrow (${record.dueDate.toDateString()}).\n\nPlease return it on time.\n\nThank you!`;
+
+      await sendEmail({
         to: email,
         subject: "Return Reminder",
-        text: `Hello ${name},\n\nThis is a friendly reminder that your borrowed book "${record.bookTitle}" is due tomorrow (${record.dueDate.toDateString()}).\n\nPlease return it on time.\n\nThank you!`,
+        text,
       });
 
       console.log(`Reminder sent to ${email} for book "${record.bookTitle}"`);
     }
 
-    console.log("✅ All return reminders sent!");
+    console.log("All return reminders sent!");
   } catch (err) {
-    console.error("❌ Error sending return reminders:", err);
+    console.error("Error sending return reminders:", err);
   }
 }
